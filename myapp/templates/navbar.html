@@ -29,11 +29,11 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="{% url 'view_profile' %}">View Profile</a>
                         <a class="dropdown-item" href="{% url 'update_profile' %}">Update Profile</a>
-                        <a class="dropdown-item" href="{% url 'my_listings' %}">My Listings</a>
+                        <a class="dropdown-item" href="#">My Listings</a>
                         <a class="dropdown-item" href="{% url 'login_history' %}">Login History</a>
-                        <a class="dropdown-item" href="{% url 'password_change' %}">Change Password</a>
+                        <a class="dropdown-item" href="#">Change Password</a>
                         {% if user.is_superuser %}
-                            <a class="dropdown-item" href="{% url 'site_statistics' %}">Site Statistics</a>
+                            <a class="dropdown-item" href="#">Site Statistics</a>
                         {% endif %}
                         <div class="dropdown-divider"></div>
                         <form method="post" action="{% url 'logout' %}" class="dropdown-item p-0">
@@ -44,10 +44,10 @@
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link text-center" href="#">Login</a>
+                    <a class="nav-link text-center" href="{% url 'login' %}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-center" href="#">Sign Up</a>
+                    <a class="nav-link text-center" href="{% url 'signup' %}">Sign Up</a>
                 </li>
             {% endif %}
         </ul>
