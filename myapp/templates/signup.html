@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">Sign Up</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{ form.username.label_tag }}
+                            {{ form.username|add_class:"form-control" }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.email.label_tag }}
+                            {{ form.email|add_class:"form-control" }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.password1.label_tag }}
+                            {{ form.password1|add_class:"form-control" }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.password2.label_tag }}
+                            {{ form.password2|add_class:"form-control" }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.contact_number.label_tag }}
+                            {{ form.contact_number|add_class:"form-control" }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.company_name.label_tag }}
+                            {{ form.company_name|add_class:"form-control" }}
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Sign Up</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block fixed_buttons %}
+{% endblock %}
