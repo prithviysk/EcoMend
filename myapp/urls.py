@@ -10,6 +10,7 @@ urlpatterns = [
     path('profile/', view_profile, name='view_profile'),
     path('profile/update/', update_profile, name='update_profile'),
     path('profile/login_history/', login_history, name='login_history'),
+    path('site-statistics/', site_statistics, name='site_statistics'),
     path('categories/', views.CategoryListView.as_view(), name='category_list'),
     path('categories/<int:pk>/', views.CategoryDetailView.as_view(), name='category_detail'),
 ]

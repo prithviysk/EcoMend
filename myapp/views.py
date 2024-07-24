@@ -1,7 +1,9 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.sessions.models import Session
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
+from django.utils.timezone import now
 from django.views.generic import TemplateView, ListView, DetailView
 from django.shortcuts import redirect, render, get_object_or_404
 from myapp.models import Category
@@ -65,6 +67,36 @@ def update_profile(request):
 def login_history(request):
     login_history = LoginHistory.objects.filter(user=request.user).order_by('-timestamp')
     return render(request, 'login_history.html', {'login_history': login_history})
+
+def superuser_required(view_func):
+    decorated_view_func = user_passes_test(lambda u: u.is_superuser, login_url='home')(view_func)
+    return decorated_view_func
+
+@superuser_required
+def site_statistics(request):
+    if request.method == 'GET':
+        return render(request, 'site_statistics.html')
+
+def get_active_sessions():
+    # Filter sessions that have not expired
+    sessions = Session.objects.filter(expire_date__gte=now())
+    return sessions
+
+@user_passes_test(lambda u: u.is_superuser)
+def site_statistics(request):
+    visits = request.session.get('visits', 0)
+    last_visit = request.session.get('last_visit', 'Never')
+
+    # Get active sessions
+    active_sessions = get_active_sessions()
+    session_count = active_sessions.count()
+
+    return render(request, 'site_statistics.html', {
+        'visits': visits,
+        'last_visit': last_visit,
+        'active_sessions': session_count,
+        'sessions': active_sessions,
+    })
 
 
 class CategoryListView(ListView):

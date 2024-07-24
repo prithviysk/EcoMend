@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}PlastiTrade{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .btn-primary-persistent {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 15px;
+        }
+
+        .btn-primary-persistent:hover {
+            background-color: rgb(2,131,76);
+        }
+
+        .fixed-buttons {
+            position: fixed;
+            bottom: 80px;
+            right: 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .fixed-buttons .btn-primary-persistent {
+            width: 120px;
+        }
+
+        /* Navbar styles */
+        #navbar {
+            transition: all 0.3s ease;
+            padding: 20px 0;
+        }
+
+        #navbar.navbar-shrink {
+            padding: 10px 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-shrink .navbar-brand {
+            font-size: 1rem;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-shrink .navbar-nav .nav-link {
+            font-size: 1rem;
+        }
+
+        .navbar-nav.ml-auto .nav-item {
+            margin-left: 15px; /* Adjust the margin as needed */
+        }
+
+        .navbar-nav .nav-link {
+            padding-right: 15px; /* Adjust the padding as needed */
+        }
+
+        /* Add padding to the top of the content to account for the fixed navbar */
+        body {
+            padding-top: 80px; /* Adjust this value based on the height of your navbar */
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div>
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    {% block fixed_buttons %}
+    <div class="fixed-buttons">
+        <button class="btn-primary-persistent">Sell</button>
+        <button class="btn-primary-persistent">Get in touch</button>
+    </div>
+    {% endblock %}
+
+    {% include 'footer.html' %}
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // jQuery to shrink the navbar on scroll
+        $(window).scroll(function() {
+            if ($("#navbar").offset().top > 50) {
+                $("#navbar").addClass("navbar-shrink");
+            } else {
+                $("#navbar").removeClass("navbar-shrink");
+            }
+        });
+
+        // AJAX call to track visits
+        $(document).ready(function() {
+            $.ajax({
+                url: '{% url "track_visit" %}',
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function(data) {
+                    console.log('Visit tracked:', data);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
