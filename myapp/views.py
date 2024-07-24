@@ -2,11 +2,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, DetailView
 from django.shortcuts import redirect, render, get_object_or_404
-
+from myapp.models import Category
 from myapp.forms import SignUpForm, ProfileUpdateForm
 from myapp.models import Profile, LoginHistory
+
 
 
 # Create your views here.
@@ -18,6 +19,7 @@ class HomeView(TemplateView):
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
+
 
 class CustomLogoutView(LogoutView):
     template_name = 'logout.html'
@@ -39,10 +41,12 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
+
 @login_required
 def view_profile(request):
     profile, created = Profile.objects.get_or_create(user=request.user)
     return render(request, 'view_profile.html', {'profile': profile})
+
 
 @login_required
 def update_profile(request):
@@ -56,7 +60,20 @@ def update_profile(request):
         form = ProfileUpdateForm(instance=profile)
     return render(request, 'update_profile.html', {'form': form})
 
+
 @login_required
 def login_history(request):
     login_history = LoginHistory.objects.filter(user=request.user).order_by('-timestamp')
     return render(request, 'login_history.html', {'login_history': login_history})
+
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'category_list.html'
+    context_object_name = 'categories'
+
+
+class CategoryDetailView(DetailView):
+    model = Category
+    template_name = 'category_detail.html'
+    context_object_name = 'category'
