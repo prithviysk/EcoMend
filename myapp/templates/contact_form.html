@@ -1,0 +1,143 @@
+<!-- In templates/contact_form.html -->
+{% extends 'base.html' %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<style>
+    .form-group {
+        flex: 1 1 48%;
+        margin-bottom: 20px;
+    }
+
+    .form-group.full-width {
+        flex: 1 1 100%;
+    }
+
+    .form-group.phone-group {
+        display: flex;
+        flex: 1 1 100%;
+        justify-content: space-between;
+    }
+
+    .form-group.phone-group select {
+        flex: 1 1 30%;
+        margin-right: 10px;
+    }
+
+    .form-group.phone-group input {
+        flex: 1 1 65%;
+    }
+
+    .form-group select,
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="tel"],
+    .form-group textarea {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-group textarea {
+        resize: vertical;
+    }
+
+    .btn-primary {
+        background-color: #000;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 15px;
+    }
+
+    .btn-primary:hover {
+        background-color: rgb(2,131,76);
+    }
+
+    .contact-form .form-group + .form-group {
+        margin-left: 20px;
+    }
+</style>
+
+<div class="container mt-4">
+    <h1>Contact Us</h1>
+    <form method="post" action="{% url 'contact_form' %}" >
+        {% csrf_token %}
+        <div class="form-group row">
+            <div class="col-6">
+                <label for="first_name">First name*</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" required>
+            </div>
+            <div class="col-6">
+                <label for="last_name">Last name*</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email*</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-md-4">
+                <label for="country_code">Country Code*</label>
+                <select class="form-control" id="country_code" name="country_code" required>
+                    <option value="">Please Select</option>
+                    <option value="+1">Canada (+1)</option>
+                </select>
+            </div>
+            <div class="form-group col-md-8">
+                <label for="phone_number">Phone number*</label>
+                <input type="tel" class="form-control" id="phone_number" name="phone_number" required>
+            </div>
+        </div>
+        <div class="form-group full-width">
+            <label for="contact_method">Would like us to call or email you?*</label>
+            <select class="form-control" id="contact_method" name="contact_method" required>
+                <option value="">Please Select</option>
+                <option value="Call">Call</option>
+                <option value="Email">Email</option>
+            </select>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-md-6">
+                <label for="country">Country/Region*</label>
+                <input type="text" class="form-control" id="country" name="country" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="postal_code">Postal code*</label>
+                <input type="text" class="form-control" id="postal_code" name="postal_code" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="company_name">Company name*</label>
+            <input type="text" class="form-control" id="company_name" name="company_name" required>
+        </div>
+        <div class="form-group full-width">
+            <label for="buy_or_sell">Would you like to buy/sell?*</label>
+            <select class="form-control" id="buy_or_sell" name="buy_or_sell" required>
+                <option value="">Please Select</option>
+                <option value="Buy">Buy</option>
+                <option value="Sell">Sell</option>
+            </select>
+        </div>
+        <div class="form-group full-width">
+                <label for="enquiry">Enquiry</label>
+                <textarea class="form-control" id="enquiry" name="enquiry" rows="4"></textarea>
+            </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

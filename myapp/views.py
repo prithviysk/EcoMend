@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login
 from django.utils import timezone
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, FormView
 from django.shortcuts import redirect, render, get_object_or_404
 from myapp.models import Category
 from myapp.forms import SignUpForm, ProfileUpdateForm
@@ -132,3 +132,11 @@ class CategoryDetailView(DetailView):
     model = Category
     template_name = 'category_detail.html'
     context_object_name = 'category'
+
+class ContactFormView(FormView):
+    template_name = 'contact_form.html'
+    form_class = ContactForm
+    success_url = '/thank-you/'
+
+    def form_valid(self, form):
+        return super().form_valid(form)
