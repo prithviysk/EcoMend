@@ -1,9 +1,13 @@
+
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.sessions.models import Session
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
+from django.utils import timezone
 from django.utils.timezone import now
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView, DetailView
 from django.shortcuts import redirect, render, get_object_or_404
 from myapp.models import Category
@@ -97,6 +101,25 @@ def site_statistics(request):
         'active_sessions': session_count,
         'sessions': active_sessions,
     })
+
+@csrf_exempt
+def track_visit(request):
+    session = request.session
+    now = timezone.now()
+    if 'visits' not in session:
+        session['visits'] = 1
+    else:
+        session['visits'] += 1
+
+    session['last_visit'] = now.strftime('%Y-%m-%d %H:%M:%S')
+    session.save()
+
+    return HttpResponse('Visit tracked')
+
+def get_active_sessions():
+    # Filter sessions that have not expired
+    sessions = Session.objects.filter(expire_date__gte=now())
+    return sessions
 
 
 class CategoryListView(ListView):
