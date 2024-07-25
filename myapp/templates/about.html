@@ -1,0 +1,77 @@
+<!-- In templates/about.html -->
+{% extends 'base.html' %}
+
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<style>
+    .about-container {
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+    }
+
+    .about-container h1 {
+        margin-bottom: 20px;
+        font-size: 2.5rem;
+        color: #333;
+    }
+
+    .about-container h2 {
+        margin-top: 30px;
+        font-size: 2rem;
+        color: #333;
+    }
+
+    .about-container p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        color: #555;
+    }
+
+    .about-container ul {
+        margin-top: 10px;
+        padding-left: 20px;
+        font-size: 1.2rem;
+        color: #555;
+    }
+
+    .about-container ul li {
+        margin-bottom: 10px;
+    }
+</style>
+
+<div class="about-container">
+    <h1>About Us</h1>
+
+    <p>Welcome to EcoMend, a pioneering platform dedicated to facilitating the trading of used plastics. Our mission is to create a sustainable future by promoting the reuse and recycling of valuable plastic materials. Since our inception in 2005, we have grown to become a leading name in the global plastic trading industry, connecting buyers and sellers from various sectors.</p>
+
+    <h2>Our Team</h2>
+    <p>At EcoMend, we pride ourselves on having a diverse and highly skilled international team. Our professionals bring a wealth of experience and knowledge, ensuring that we provide the best possible service to our clients. Visit our Meet the Team page to learn more about the dedicated individuals who drive our success.</p>
+
+    <h2>Our Values</h2>
+    <ul>
+        <li><strong>Sustainability:</strong> We are committed to promoting the reuse and recycling of plastic materials, helping to reduce environmental impact and support a circular economy.</li>
+        <li><strong>Integrity:</strong> Our operations are guided by stringent ethical standards, ensuring transparency, traceability, and responsible handling of materials.</li>
+        <li><strong>Partnership:</strong> We believe in building long-term relationships with our suppliers and customers, offering expert advice and support to maximize the value of their plastic materials.</li>
+        <li><strong>Innovation:</strong> We continuously strive to innovate and improve our services, leveraging advanced technology to provide detailed listings and secure transactions.</li>
+    </ul>
+
+    <h2>Our Services</h2>
+    <p>EcoMend offers a comprehensive range of services to support our users in achieving their sustainability goals:</p>
+    <ul>
+        <li><strong>Detailed Listings:</strong> Our platform features detailed listings with images and descriptions, helping buyers find high-quality used plastics that meet strict quality standards.</li>
+        <li><strong>Secure Transactions:</strong> We prioritize the security of transactions, ensuring that all trades are conducted safely and efficiently.</li>
+        <li><strong>Customer Support:</strong> Our dedicated customer support team is always ready to assist you with any queries or concerns.</li>
+    </ul>
+
+    <h2>Join Us</h2>
+    <p>EcoMend is more than just a trading platform; it’s a community committed to making a positive impact on the environment. By joining us, you become part of a movement towards a more sustainable future. Together, we can reduce plastic waste and promote the reuse of valuable materials.</p>
+
+    <h2>Contact Us</h2>
+    <p>If you have any questions or would like to learn more about our services, please don't hesitate to get in touch with us. We look forward to partnering with you on this journey towards sustainability.</p>
+</div>
+{% endblock %}

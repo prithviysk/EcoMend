@@ -15,4 +15,5 @@ urlpatterns = [
     path('track-visit/', track_visit, name='track_visit'),
     path('categories/', views.CategoryListView.as_view(), name='category_list'),
     path('categories/<int:pk>/', views.CategoryDetailView.as_view(), name='category_detail'),
+    path('about/', views.AboutView.as_view(), name='about'),
 ]
