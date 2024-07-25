@@ -48,6 +48,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "myapp.middleware.LoginHistoryMiddleware",
+    "myapp.middleware.ActiveSessionMiddleware"
 ]
 
 ROOT_URLCONF = "EcoMend.urls"

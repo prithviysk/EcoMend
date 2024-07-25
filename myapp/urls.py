@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
-from .views import CustomLoginView, CustomLogoutView, view_profile, update_profile, login_history, \
-    CustomPasswordChangeView, CustomPasswordChangeDoneView
+from .views import CustomLoginView, CustomLogoutView, view_profile, update_profile, login_history, site_statistics, \
+    track_visit
 
 urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
@@ -11,14 +11,9 @@ urlpatterns = [
     path('profile/', view_profile, name='view_profile'),
     path('profile/update/', update_profile, name='update_profile'),
     path('profile/login_history/', login_history, name='login_history'),
+    path('site-statistics/', site_statistics, name='site_statistics'),
+    path('track-visit/', track_visit, name='track_visit'),
     path('categories/', views.CategoryListView.as_view(), name='category_list'),
     path('categories/<int:pk>/', views.CategoryDetailView.as_view(), name='category_detail'),
-    path('password_change/', CustomPasswordChangeView.as_view(), name='password_change'),
-    path('password_change/done/', CustomPasswordChangeDoneView.as_view(), name='password_change_done'),
-
-
+    path('about/', views.AboutView.as_view(), name='about'),
 ]
-
-
-
-
