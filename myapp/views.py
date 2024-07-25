@@ -16,7 +16,8 @@ from myapp.models import Profile, LoginHistory
 
 
 
-# Create your views here.
+class AboutView(TemplateView):
+    template_name = 'about.html'
 
 
 class HomeView(TemplateView):
