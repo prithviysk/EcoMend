@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView, DetailView, FormView
 from django.shortcuts import redirect, render, get_object_or_404
 from myapp.models import Category
-from myapp.forms import SignUpForm, ProfileUpdateForm
+from myapp.forms import SignUpForm, ProfileUpdateForm, ContactForm, CategoryPlasticListingForm
 from myapp.models import Profile, LoginHistory
 
 
@@ -133,6 +133,27 @@ class CategoryDetailView(DetailView):
     model = Category
     template_name = 'category_detail.html'
     context_object_name = 'category'
+
+@login_required
+def new_category_plastic_listing(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+
+    if request.method == 'POST':
+        form = CategoryPlasticListingForm(request.POST)
+        if form.is_valid():
+            listing = form.save(commit=False)
+            listing.category = category
+            listing.seller = request.user
+            listing.save()
+            return redirect('category_detail', pk=pk)
+    else:
+        form = CategoryPlasticListingForm(category=category)
+
+    context = {
+        'form': form,
+        'category': category,
+    }
+    return render(request, 'new_category_plastic_listing.html', context)
 
 class ContactFormView(FormView):
     template_name = 'contact_form.html'

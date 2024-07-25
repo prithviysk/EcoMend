@@ -22,6 +22,18 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+class PlasticListing(models.Model):
+    seller = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField(blank=True)
+    date_listed = models.DateTimeField(auto_now_add=True)
+    images = models.ImageField(upload_to='listing_images/', blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.category.name} Listing by {self.seller.username}"
+
 class LoginHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)

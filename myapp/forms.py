@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from myapp.models import Profile
+from myapp.models import Profile, PlasticListing
 
 
 class SignUpForm(UserCreationForm):
@@ -63,3 +63,27 @@ class ContactForm(forms.Form):
     company_name = forms.CharField(max_length=100, required=True)
     buy_or_sell = forms.ChoiceField(choices=[('buy', 'Buy'), ('sell', 'Sell')], required=True)
     enquiry = forms.CharField(widget=forms.Textarea, required=False)
+
+class ContactForm(forms.Form):
+    first_name = forms.CharField(max_length=100, required=True)
+    last_name = forms.CharField(max_length=100, required=True)
+    email = forms.EmailField(required=True)
+    phone_number = forms.CharField(max_length=20, required=True)
+    contact_method = forms.ChoiceField(choices=[('email', 'Email'), ('phone', 'Phone')], required=True)
+    country_region = forms.CharField(max_length=100, required=True)
+    postal_code = forms.CharField(max_length=20, required=True)
+    company_name = forms.CharField(max_length=100, required=True)
+    buy_or_sell = forms.ChoiceField(choices=[('buy', 'Buy'), ('sell', 'Sell')], required=True)
+    enquiry = forms.CharField(widget=forms.Textarea, required=False)
+
+class CategoryPlasticListingForm(forms.ModelForm):
+    class Meta:
+        model = PlasticListing
+        fields = ['category', 'quantity', 'price', 'description']
+
+    def __init__(self, *args, **kwargs):
+        category = kwargs.pop('category', None)
+        super().__init__(*args, **kwargs)
+        if category:
+            self.fields['category'].widget = forms.HiddenInput()
+            self.initial['category'] = category
