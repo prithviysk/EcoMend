@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
+from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, ListView, DetailView
 from django.shortcuts import redirect, render, get_object_or_404
 from myapp.models import Category
@@ -77,3 +78,14 @@ class CategoryDetailView(DetailView):
     model = Category
     template_name = 'category_detail.html'
     context_object_name = 'category'
+
+
+
+@method_decorator(login_required, name='dispatch')
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name = 'password_change.html'
+    success_url = '/password_change/done/'
+
+@method_decorator(login_required, name='dispatch')
+class CustomPasswordChangeDoneView(PasswordChangeDoneView):
+    template_name = 'password_change_done.html'
