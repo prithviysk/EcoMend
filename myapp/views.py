@@ -9,7 +9,7 @@ from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView, DetailView, FormView
 from django.shortcuts import redirect, render, get_object_or_404
-from myapp.models import Category
+from myapp.models import Category, PlasticListing
 from myapp.forms import SignUpForm, ProfileUpdateForm, ContactForm, CategoryPlasticListingForm
 from myapp.models import Profile, LoginHistory
 from django.utils.decorators import method_decorator
@@ -178,3 +178,37 @@ class ContactFormView(FormView):
 
     def form_valid(self, form):
         return super().form_valid(form)
+
+
+class MarketPlaceView(ListView):
+    model = PlasticListing
+    template_name = 'marketplace.html'
+    context_object_name = 'listings'
+
+    def get_queryset(self):
+        queryset = PlasticListing.objects.all()
+
+        # Filtering
+        seller = self.request.GET.get('seller')
+        min_price = self.request.GET.get('min_price')
+        max_price = self.request.GET.get('max_price')
+        category = self.request.GET.get('category')
+        sort_by_date = self.request.GET.get('sort_by_date')
+
+        if seller:
+            queryset = queryset.filter(seller__username__icontains=seller)
+        if min_price:
+            queryset = queryset.filter(price__gte=min_price)
+        if max_price:
+            queryset = queryset.filter(price__lte=max_price)
+        if category:
+            queryset = queryset.filter(category__name__icontains=category)
+        if sort_by_date:
+            queryset = queryset.order_by('date_listed' if sort_by_date == 'asc' else '-date_listed')
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context

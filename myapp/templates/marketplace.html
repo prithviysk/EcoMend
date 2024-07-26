@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% block title %}MarketPlace{% endblock %}
+
+{% block content %}
+<style>
+    .marketplace-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        height: fit-content;
+    }
+
+    .marketplace-item {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+
+    .marketplace-item h4 {
+        margin-top: 0;
+    }
+
+    .marketplace-item .btn-primary {
+        background-color: #000;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 8px;
+    }
+
+    .marketplace-item .btn-primary:hover {
+        background-color: rgb(2,131,76);
+    }
+
+    .sidebar {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar h4 {
+        margin-top: 0;
+    }
+
+    .main-content {
+        display: flex;
+    }
+
+    .main-content .sidebar {
+        flex: 1;
+        margin-right: 20px;
+    }
+
+    .main-content .marketplace-container {
+        flex: 3;
+    }
+
+    .custom-container {
+        margin-left: 10px;
+    }
+
+    .header-class {
+        margin: 50px 0px 30px 20px;
+    }
+
+    .date-listed {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        font-size: 14px;
+        color: #666;
+    }
+</style>
+
+<div class="custom-container mt-4">
+    <h1 class="header-class">MarketPlace</h1>
+    <div class="main-content">
+        <!-- Sidebar for filters -->
+        <div class="sidebar">
+            <h4>Search Filters</h4>
+            <form method="get">
+                <div class="form-group">
+                    <label for="seller">Seller:</label>
+                    <input type="text" id="seller" name="seller" class="form-control" placeholder="Seller" value="{{ request.GET.seller }}">
+                </div>
+                <div class="form-group">
+                    <label for="min_price">Min Price:</label>
+                    <input type="number" id="min_price" name="min_price" class="form-control" placeholder="Min Price" value="{{ request.GET.min_price }}">
+                </div>
+                <div class="form-group">
+                    <label for="max_price">Max Price:</label>
+                    <input type="number" id="max_price" name="max_price" class="form-control" placeholder="Max Price" value="{{ request.GET.max_price }}">
+                </div>
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <select id="category" name="category" class="form-control">
+                        <option value="">All Categories</option>
+                        {% for category in categories %}
+                            <option value="{{ category.name }}" {% if request.GET.category == category.name %}selected{% endif %}>{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sort_by_date">Sort by Date:</label>
+                    <select id="sort_by_date" name="sort_by_date" class="form-control">
+                        <option value="">Select</option>
+                        <option value="asc" {% if request.GET.sort_by_date == 'asc' %}selected{% endif %}>Ascending</option>
+                        <option value="desc" {% if request.GET.sort_by_date == 'desc' %}selected{% endif %}>Descending</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-dark">Search</button>
+            </form>
+        </div>
+
+        <!-- Marketplace items -->
+        <div class="marketplace-container">
+            {% for listing in listings %}
+                <div class="marketplace-item">
+                    {% if listing.images %}
+                        <img src="{{ listing.images.url }}" alt="{{ listing.plastic_type }}" style="width: 100%; height: auto; border-radius: 8px;">
+                    {% else %}
+                        <p>No image available</p>
+                    {% endif %}
+                    <h4>{{ listing.plastic_type }}</h4>
+                    <p><strong>Seller:</strong> {{ listing.seller.username }}</p>
+                    <p><strong>Category:</strong> {{ listing.category.name }}</p>
+                    <p><strong>Quantity:</strong> {{ listing.quantity }}</p>
+                    <p><strong>Price:</strong> ${{ listing.price }}</p>
+                    <p><strong>Description:</strong>
+                        {% with listing.description.split|slice:":5" as desc_words %}
+                            {{ desc_words|join:" " }}{% if listing.description|length > 15 %}...{% endif %}
+                        {% endwith %}
+                    </p>
+                    <a href="{% url 'listing_detail' listing.id %}" class="btn-primary">Check Listing</a>
+                    <p class="date-listed">{{ listing.date_listed|date:"Y-m-d" }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block fixed_buttons %}{% endblock %}
