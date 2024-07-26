@@ -171,6 +171,16 @@ def new_category_plastic_listing(request, pk):
     }
     return render(request, 'new_category_plastic_listing.html', context)
 
+class CategoryDetailView(DetailView):
+    model = Category
+    template_name = 'category_detail_abs.html'
+    context_object_name = 'category'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['listings'] = PlasticListing.objects.filter(category=self.object)
+        return context
+
 class ContactFormView(FormView):
     template_name = 'contact_form.html'
     form_class = ContactForm

@@ -15,6 +15,7 @@ urlpatterns = [
     path('track-visit/', track_visit, name='track_visit'),
     path('categories/', views.CategoryListView.as_view(), name='category_list'),
     path('categories/<int:pk>/', views.CategoryDetailView.as_view(), name='category_detail'),
+    path('categories/abs/', views.CategoryDetailViewABS, name='category_detail_abs'),
     path('about/', views.AboutView.as_view(), name='about'),
     path('password_change/', CustomPasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', CustomPasswordChangeDoneView.as_view(), name='password_change_done'),
