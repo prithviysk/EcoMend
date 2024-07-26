@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from myapp.models import Profile, PlasticListing
+from myapp.models import Profile, PlasticListing, Category
 
 
 class SignUpForm(UserCreationForm):
@@ -87,3 +87,10 @@ class CategoryPlasticListingForm(forms.ModelForm):
         if category:
             self.fields['category'].widget = forms.HiddenInput()
             self.initial['category'] = category
+
+class MarketPlaceFilterForm(forms.Form):
+    seller = forms.CharField(required=False, label='Seller')
+    min_price = forms.DecimalField(required=False, min_value=0, label='Min Price')
+    max_price = forms.DecimalField(required=False, min_value=0, label='Max Price')
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False, label='Category')
+    sort_by_date = forms.ChoiceField(choices=[('asc', 'Ascending'), ('desc', 'Descending')], required=False, label='Sort by Date')
