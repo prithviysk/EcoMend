@@ -19,4 +19,5 @@ urlpatterns = [
     path('password_change/', CustomPasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', CustomPasswordChangeDoneView.as_view(), name='password_change_done'),
     path('marketplace/', views.MarketPlaceView.as_view(), name='marketplace'),
+    path('new-listing/', views.new_plastic_listing, name='new_plastic_listing'),
 ]

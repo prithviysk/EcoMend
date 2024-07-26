@@ -82,3 +82,15 @@ class MarketPlaceFilterForm(forms.Form):
     max_price = forms.DecimalField(required=False, min_value=0, label='Max Price')
     category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False, label='Category')
     sort_by_date = forms.ChoiceField(choices=[('asc', 'Ascending'), ('desc', 'Descending')], required=False, label='Sort by Date')
+
+
+class PlasticListingForm(forms.ModelForm):
+    class Meta:
+        model = PlasticListing
+        fields = ['category', 'quantity', 'price', 'description', 'images']
+
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), required=True)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.all()

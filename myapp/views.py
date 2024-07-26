@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView, DetailView, FormView
 from django.shortcuts import redirect, render, get_object_or_404
 from myapp.models import Category, PlasticListing
-from myapp.forms import SignUpForm, ProfileUpdateForm, ContactForm, CategoryPlasticListingForm
+from myapp.forms import SignUpForm, ProfileUpdateForm, ContactForm, CategoryPlasticListingForm, PlasticListingForm
 from myapp.models import Profile, LoginHistory
 from django.utils.decorators import method_decorator
 
@@ -212,3 +212,16 @@ class MarketPlaceView(ListView):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
         return context
+
+@login_required
+def new_plastic_listing(request):
+    if request.method == 'POST':
+        form = PlasticListingForm(request.POST, request.FILES)
+        if form.is_valid():
+            listing = form.save(commit=False)
+            listing.seller = request.user
+            listing.save()
+            return redirect('listing_detail', pk=listing.pk)
+    else:
+        form = PlasticListingForm()
+    return render(request, 'new_plastic_listing.html', {'form': form})
