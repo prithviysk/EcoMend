@@ -2,8 +2,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 from django.contrib.sessions.models import Session
 from django.http import HttpResponse
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.utils import timezone
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
@@ -123,7 +122,6 @@ def track_visit(request):
 
 
 def get_active_sessions():
-    # Filter sessions that have not expired
     sessions = Session.objects.filter(expire_date__gte=now())
     return sessions
 
@@ -171,7 +169,7 @@ def new_category_plastic_listing(request, pk):
     }
     return render(request, 'new_category_plastic_listing.html', context)
 
-class CategoryDetailView(DetailView):
+class CategoryDetailViewABS(DetailView):
     model = Category
     template_name = 'category_detail_abs.html'
     context_object_name = 'category'
