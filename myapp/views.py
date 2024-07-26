@@ -1,6 +1,5 @@
-
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 from django.contrib.sessions.models import Session
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -13,7 +12,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from myapp.models import Category
 from myapp.forms import SignUpForm, ProfileUpdateForm, ContactForm, CategoryPlasticListingForm
 from myapp.models import Profile, LoginHistory
-
+from django.utils.decorators import method_decorator
 
 
 class AboutView(TemplateView):
@@ -73,19 +72,23 @@ def login_history(request):
     login_history = LoginHistory.objects.filter(user=request.user).order_by('-timestamp')
     return render(request, 'login_history.html', {'login_history': login_history})
 
+
 def superuser_required(view_func):
     decorated_view_func = user_passes_test(lambda u: u.is_superuser, login_url='home')(view_func)
     return decorated_view_func
+
 
 @superuser_required
 def site_statistics(request):
     if request.method == 'GET':
         return render(request, 'site_statistics.html')
 
+
 def get_active_sessions():
     # Filter sessions that have not expired
     sessions = Session.objects.filter(expire_date__gte=now())
     return sessions
+
 
 @user_passes_test(lambda u: u.is_superuser)
 def site_statistics(request):
@@ -103,6 +106,7 @@ def site_statistics(request):
         'sessions': active_sessions,
     })
 
+
 @csrf_exempt
 def track_visit(request):
     session = request.session
@@ -116,6 +120,7 @@ def track_visit(request):
     session.save()
 
     return HttpResponse('Visit tracked')
+
 
 def get_active_sessions():
     # Filter sessions that have not expired
@@ -133,6 +138,17 @@ class CategoryDetailView(DetailView):
     model = Category
     template_name = 'category_detail.html'
     context_object_name = 'category'
+
+
+@method_decorator(login_required, name='dispatch')
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name = 'password_change.html'
+    success_url = '/password_change/done/'
+
+
+@method_decorator(login_required, name='dispatch')
+class CustomPasswordChangeDoneView(PasswordChangeDoneView):
+    template_name = 'password_change_done.html'
 
 @login_required
 def new_category_plastic_listing(request, pk):
