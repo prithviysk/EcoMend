@@ -17,6 +17,7 @@ urlpatterns = [
     path('categories/<int:pk>/', views.CategoryDetailView.as_view(), name='category_detail'),
     path('categories/abs/', views.CategoryDetailViewABS.as_view(), name='category_detail_abs'),
     path('about/', views.AboutView.as_view(), name='about'),
+    path('contact/', views.ContactFormView.as_view(), name='contact_form'),
     path('password_change/', CustomPasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', CustomPasswordChangeDoneView.as_view(), name='password_change_done'),
     path('marketplace/', views.MarketPlaceView.as_view(), name='marketplace'),

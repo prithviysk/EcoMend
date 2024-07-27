@@ -16,8 +16,8 @@
     .banner {
         display: flex;
         align-items: center;
-        height: 100vh;
-        background: rgb(2,131,76);
+        height: 100vh; /* Full height */
+        background: rgb(2,131,76); /* Red background */
         color: white;
         position: relative;
         overflow: hidden;
@@ -27,7 +27,7 @@
     .banner-text {
         font-family: 'SofiaProRegular', sans-serif;
         max-width: 50%;
-        z-index: 1;
+        z-index: 1; /* Ensure text is above the image */
         padding-left: 100px;
     }
 
@@ -48,7 +48,7 @@
         right: 0;
         height: 100%;
         width: 60%;
-        clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%);
+        clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%); /* Trapezoid effect */
         z-index: 0;
     }
 
@@ -69,7 +69,7 @@
     .card-body {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: space-between; /* Ensures space between title and description */
         height: 100%;
     }
 
@@ -78,7 +78,7 @@
         font-size: 26px;
         color: black;
         font-weight: bold;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.5rem; /* Adjust margin as needed */
     }
 
     .card-title a {
@@ -136,12 +136,11 @@
     }
 </style>
 
-
+<!-- New Banner Section -->
 <div class="banner">
     <div class="banner-text">
         <h1>Buying and Selling Plastic</h1>
         <p>Multiple grades of plastics</p>
-        <button class="btn btn-primary">Get in touch</button>
     </div>
     <div class="banner-image">
         <img src="{% static 'static_images/home_image.jpg' %}" alt="Buying and Selling Plastic">
@@ -154,7 +153,7 @@
         EcoMend is a premier platform for connecting buyers and sellers of used plastics, offering over 100 grades. Since 2005, we have facilitated the trading of plastic, leveraging our extensive knowledge and expertise in global end markets.
     <p>
     <p>
-    EcoMend stands out as a leading company in the world for purchasing scrap plastic and selling recycled plastic, thanks to our international team of professionals operating across the globe. Visit our <a class="links" href="#">Meet the Team page</a> to learn more about our multinational team.
+    EcoMend stands out as a leading company in the world for purchasing scrap plastic and selling recycled plastic, thanks to our international team of professionals operating across the globe. Visit our <a class="links" href="{% url 'about' %}">Meet the Team page</a> to learn more about our multinational team.
     <p>
     </p>
     <p>
@@ -171,12 +170,12 @@
         EcoMend connects buyers and sellers of high-quality used plastics suitable for reuse. Our platform ensures that all plastics meet strict quality standards, free from contaminants and barrier layers. We feature listings from trusted sellers using advanced technology, providing detailed information on various polymers and regrinds.
     </p>
     <p>
-        For more information about the range of plastic regrinds that EcoMend sell, <a class="links" href="#">speak to a member of the team today.</a>
+        For more information about the range of plastic regrinds that EcoMend sell, <a class="links" href="{% url 'contact_form' %}">speak to a member of the team today.</a>
     </p>
 
     <h1 class="headers">EcoMend - a medium for scrap plastic exchange</h1>
     <p>
-        At EcoMend, we work with companies in a range of sectors to buy discarded plastic, which we subsequently recycle for use in green initiatives. Developing enduring relationships with our suppliers is our top priority as opposed to taking a merely transactional approach. In order to guarantee that suppliers get the most out of their discarded plastic, we offer advice on how to separate, store, and handle plastic materials.
+        At PlastiTrade, we work with companies in a range of sectors to buy discarded plastic, which we subsequently recycle for use in green initiatives. Developing enduring relationships with our suppliers is our top priority as opposed to taking a merely transactional approach. In order to guarantee that suppliers get the most out of their discarded plastic, we offer advice on how to separate, store, and handle plastic materials.
     </p>
     <p>
         For material collection, a minimum volume of 5 metric tons, or half a truck, is needed. If keeping your scrap plastic in storage while it accumulates this much is a worry, PlastiTrade can set up appropriate storage options for your company. By doing this, you can keep your workspace safer and recover important space.
@@ -194,7 +193,7 @@
                 {% endif %}
                 <div class="card-body d-flex flex-column justify-content-center">
                     <h4 class="card-title">
-                        <a href="#">{{ category.name }}</a>
+                        <a href="{% url 'category_detail' pk=category.pk %}">{{ category.name }}</a>
                     </h4>
                     <p class="card-text">{{ category.description }}</p>
                 </div>

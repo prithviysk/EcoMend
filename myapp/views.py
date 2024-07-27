@@ -22,6 +22,11 @@ class AboutView(TemplateView):
 class HomeView(TemplateView):
     template_name = 'home.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
+
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
@@ -218,11 +223,6 @@ class MarketPlaceView(ListView):
             queryset = queryset.order_by('date_listed' if sort_by_date == 'asc' else '-date_listed')
 
         return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.all()
-        return context
 
 @login_required
 def new_plastic_listing(request):
