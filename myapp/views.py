@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 from django.contrib.sessions.models import Session
 from django.http import HttpResponse
@@ -233,3 +234,12 @@ def new_plastic_listing(request):
     else:
         form = PlasticListingForm()
     return render(request, 'new_plastic_listing.html', {'form': form})
+
+
+class MyListingsView(LoginRequiredMixin, ListView):
+    model = PlasticListing
+    template_name = 'my_listings.html'
+    context_object_name = 'listings'
+
+    def get_queryset(self):
+        return PlasticListing.objects.filter(seller=self.request.user)

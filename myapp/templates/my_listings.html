@@ -1,0 +1,24 @@
+<!-- In templates/my_listings.html -->
+{% extends 'base.html' %}
+
+{% block title %}My Listings{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>My Listings</h2>
+    <div class="list-group">
+        {% for listing in listings %}
+            <a href="{% url 'listing_detail' listing.pk %}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ listing.category.name }}</h5>
+                    <small>{{ listing.date_listed|date:"M d, Y" }}</small>
+                </div>
+                <p class="mb-1">{{ listing.description }}</p>
+                <small>Quantity: {{ listing.quantity }} | Price: ${{ listing.price }}</small>
+            </a>
+        {% empty %}
+            <p class="text-muted">You have no listings.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
