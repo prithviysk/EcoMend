@@ -35,7 +35,6 @@
             width: 120px;
         }
 
-        /* Navbar styles */
         #navbar {
             transition: all 0.3s ease;
             padding: 20px 0;
@@ -95,8 +94,8 @@
 
     {% block fixed_buttons %}
     <div class="fixed-buttons">
-        <a href="#" class="persistent-links btn-primary-persistent">Sell</a>
-        <a href="#" class="persistent-links btn-primary-persistent">Get in touch</a>
+        <a href="{% url 'new_plastic_listing' %}" class="persistent-links btn-primary-persistent">Sell</a>
+        <a href="{% url 'contact_form' %}" class="persistent-links btn-primary-persistent">Get in touch</a>
     </div>
     {% endblock %}
 

@@ -28,7 +28,7 @@ class CustomLoginView(LoginView):
 
 
 class CustomLogoutView(LogoutView):
-    template_name = 'logout.html'
+    template_name = 'logged_out.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
