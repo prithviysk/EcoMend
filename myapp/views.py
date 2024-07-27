@@ -243,3 +243,9 @@ class MyListingsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return PlasticListing.objects.filter(seller=self.request.user)
+
+
+class ListingDetailView(DetailView):
+    model = PlasticListing
+    template_name = 'listing_detail.html'
+    context_object_name = 'listing'

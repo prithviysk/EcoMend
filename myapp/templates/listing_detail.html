@@ -1,0 +1,22 @@
+<!-- In templates/listing_detail.html -->
+{% extends 'base.html' %}
+
+{% block title %}Listing Detail{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Listing Detail</h2>
+    <div class="card">
+        <div class="card-header">
+            {{ listing.category.name }}
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ listing.description }}</p>
+            <p class="card-text">Quantity: {{ listing.quantity }}</p>
+            <p class="card-text">Price: ${{ listing.price }}</p>
+            <p class="card-text">Seller: {{ listing.seller.username }}</p>
+            <p class="card-text">Date Listed: {{ listing.date_listed|date:"M d, Y" }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
