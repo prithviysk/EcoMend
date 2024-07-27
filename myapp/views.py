@@ -120,6 +120,12 @@ def get_active_sessions():
     sessions = Session.objects.filter(expire_date__gte=now())
     return sessions
 
+
+@method_decorator(login_required, name='dispatch')
+class CustomPasswordChangeView(PasswordChangeView):
+    template_name = 'password_change.html'
+    success_url = '/password_change/done/'
+
 @login_required
 def login_history(request):
     login_history = LoginHistory.objects.filter(user=request.user).order_by('-timestamp')
@@ -138,10 +144,7 @@ class CategoryDetailView(DetailView):
     context_object_name = 'category'
 
 
-@method_decorator(login_required, name='dispatch')
-class CustomPasswordChangeView(PasswordChangeView):
-    template_name = 'password_change.html'
-    success_url = '/password_change/done/'
+
 
 
 @method_decorator(login_required, name='dispatch')
