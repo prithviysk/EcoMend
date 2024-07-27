@@ -76,12 +76,6 @@ class CategoryPlasticListingForm(forms.ModelForm):
             self.fields['category'].widget = forms.HiddenInput()
             self.initial['category'] = category
 
-class MarketPlaceFilterForm(forms.Form):
-    seller = forms.CharField(required=False, label='Seller')
-    min_price = forms.DecimalField(required=False, min_value=0, label='Min Price')
-    max_price = forms.DecimalField(required=False, min_value=0, label='Max Price')
-    category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False, label='Category')
-    sort_by_date = forms.ChoiceField(choices=[('asc', 'Ascending'), ('desc', 'Descending')], required=False, label='Sort by Date')
 
 
 class PlasticListingForm(forms.ModelForm):
@@ -94,3 +88,11 @@ class PlasticListingForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['category'].queryset = Category.objects.all()
+
+
+class MarketPlaceFilterForm(forms.Form):
+    seller = forms.CharField(required=False, label='Seller')
+    min_price = forms.DecimalField(required=False, min_value=0, label='Min Price')
+    max_price = forms.DecimalField(required=False, min_value=0, label='Max Price')
+    category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False, label='Category')
+    sort_by_date = forms.ChoiceField(choices=[('asc', 'Ascending'), ('desc', 'Descending')], required=False, label='Sort by Date')
