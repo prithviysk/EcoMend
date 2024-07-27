@@ -67,12 +67,6 @@ def update_profile(request):
     return render(request, 'update_profile.html', {'form': form})
 
 
-@login_required
-def login_history(request):
-    login_history = LoginHistory.objects.filter(user=request.user).order_by('-timestamp')
-    return render(request, 'login_history.html', {'login_history': login_history})
-
-
 def superuser_required(view_func):
     decorated_view_func = user_passes_test(lambda u: u.is_superuser, login_url='home')(view_func)
     return decorated_view_func
@@ -125,6 +119,11 @@ def track_visit(request):
 def get_active_sessions():
     sessions = Session.objects.filter(expire_date__gte=now())
     return sessions
+
+@login_required
+def login_history(request):
+    login_history = LoginHistory.objects.filter(user=request.user).order_by('-timestamp')
+    return render(request, 'login_history.html', {'login_history': login_history})
 
 
 class CategoryListView(ListView):
