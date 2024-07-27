@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block title %}New Plastic Listing{% endblock %}
+
+{% block content %}
+<style>
+    .form-group {
+        flex: 1 1 48%;
+        margin-bottom: 20px;
+    }
+
+    .form-group.full-width {
+        flex: 1 1 100%;
+    }
+
+    .form-group.phone-group {
+        display: flex;
+        flex: 1 1 100%;
+        justify-content: space-between;
+    }
+
+    .form-group.phone-group select {
+        flex: 1 1 30%;
+        margin-right: 10px;
+    }
+
+    .form-group.phone-group input {
+        flex: 1 1 65%;
+    }
+
+    .form-group select,
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="tel"],
+    .form-group textarea {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    .form-group input[type=file]{
+        padding:2px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-group textarea {
+        resize: vertical;
+    }
+
+    .btn-primary {
+        background-color: #000;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 15px;
+    }
+
+    .btn-primary:hover {
+        background-color: rgb(2,131,76);
+    }
+
+    .contact-form .form-group + .form-group {
+        margin-left: 20px;
+    }
+</style>
+
+<div class="container mt-4">
+    <h1>Create a New Plastic Listing</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group row">
+            <div class="col-6">
+                <label for="category">Category*</label>
+                <select class="form-control" id="category" name="category" required>
+                    {% for category in form.category.field.queryset %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-6">
+                <label for="quantity">Quantity*</label>
+                <input type="number" class="form-control" id="quantity" name="quantity" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description">Description*</label>
+            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="price">Price*</label>
+            <input type="text" class="form-control" id="price" name="price" required>
+        </div>
+        <div class="form-group">
+            <label for="image">Image</label>
+            <input type="file" class="form-control" id="image" name="image">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}
