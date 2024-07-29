@@ -67,14 +67,14 @@ class ContactForm(forms.Form):
 class CategoryPlasticListingForm(forms.ModelForm):
     class Meta:
         model = PlasticListing
-        fields = ['category', 'quantity', 'price', 'description']
+        fields = ['category', 'quantity', 'price', 'description', 'images']
 
     def __init__(self, *args, **kwargs):
         category = kwargs.pop('category', None)
         super().__init__(*args, **kwargs)
         if category:
             self.fields['category'].widget = forms.HiddenInput()
-            self.initial['category'] = category
+            self.fields['category'].initial = category
 
 
 class MarketPlaceFilterForm(forms.Form):

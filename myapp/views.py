@@ -149,9 +149,6 @@ class CategoryDetailView(DetailView):
     context_object_name = 'category'
 
 
-
-
-
 @method_decorator(login_required, name='dispatch')
 class CustomPasswordChangeDoneView(PasswordChangeDoneView):
     template_name = 'password_change_done.html'
@@ -161,7 +158,7 @@ def new_category_plastic_listing(request, pk):
     category = get_object_or_404(Category, pk=pk)
 
     if request.method == 'POST':
-        form = CategoryPlasticListingForm(request.POST)
+        form = CategoryPlasticListingForm(request.POST, request.FILES, category=category)
         if form.is_valid():
             listing = form.save(commit=False)
             listing.category = category

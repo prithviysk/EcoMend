@@ -55,6 +55,22 @@
         object-fit: cover;
     }
 
+    .banner a{
+        background-color: #000;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+
+    .banner a:hover {
+        background-color: white;
+        color: black;
+    }
+
     .category-container {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -107,6 +123,7 @@
     <div class="banner-text">
         <h1>{{ category.name }}</h1>
         <p>{{ category.description }}</p>
+        <a href="{% url 'new_plastic_listing' category.pk %}" class="btn btn-primary">Sell {{ category.name }} Plastic</a>
     </div>
     <div class="banner-image">
         <img src="{{ category.image.url }}" alt="{{ category.name }}" class="img-fluid">
