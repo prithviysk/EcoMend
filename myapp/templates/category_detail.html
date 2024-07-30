@@ -146,7 +146,7 @@
                 <p><strong>Price:</strong> ${{ listing.price }}</p>
                 <p><strong>Description:</strong> {{ listing.description }}</p>
                 <p><strong>Date Listed:</strong> {{ listing.date_listed }}</p>
-                <a href="mailto:{{ listing.seller.email }}?subject=Inquiry about {{ listing.plastic_type }}" class="btn btn-primary">Contact the Seller</a>
+                <a href="{% url 'listing_detail' listing.id %}"  class="btn btn-primary">Check Listing</a>
             </div>
         {% endfor %}
     </div>
